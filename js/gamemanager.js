@@ -47,7 +47,7 @@ let GameManager = {
 		unselectedDice[5] = dice6;
 
 		getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\" onclick=\"GameManager.throwDice()\">Würfeln!</button>";
-	}
+	},
 
 
 	throwDice: function() {
