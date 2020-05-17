@@ -51,24 +51,32 @@ var GameManager = {
 	behalten: function() {
 		const getBehaltenValue = document.querySelector("#eingabebehalten").value;
 
-		if (getBehaltenValue !== null && getBehaltenValue !== "") {
+		if (getBehaltenValue === null && getBehaltenValue === "") {
+			
+			alert("Bitte gib eine Zahl ein. Das Feld darf nicht leer sein!");
+			
 
 			
+
+		} else if (getBehaltenValue <1 || getBehaltenValue >6) {
+
+			alert("Bitte gib eine Zahl zwischen 1 und 6 ein.");
+
+		} else {
 			
-			for (i=1; i <= unselectedDice.length; i++) {
-				if (i===getBehaltenValue) {
-					unselectedDice[i].isPicked = true;
+			for (i=0; i < unselectedDice.length; i++) {
+				if ((i+1)==getBehaltenValue) {
+					unselectedDice[i].setIsPicked();
 				}
-				//console.log(unselectedDice[i].getIsPicked());
+				if (unselectedDice[i].getIsPicked()==true) {
+					console.log("true");
+				} else {
+					console.log("false");
+				}
 			}
 
 			
-
-		} else {
-			alert("Bitte gib eine Zahl ein. Das Feld darf nicht leer sein!");
 		}
-		
-			
 	}
 
 }

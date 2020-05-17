@@ -16,8 +16,12 @@ class Dice {
 	}
 
 	getIsPicked () {
-		console.log(this.isPicked);
-		return isPicked;
+		
+		return this.isPicked;
+	}
+
+	setIsPicked() {
+		this.isPicked = true;
 	}
 }
 
