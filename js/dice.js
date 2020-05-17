@@ -1,3 +1,4 @@
+/* 
 class Dice {
 
 	constructor() {
@@ -14,4 +15,4 @@ class Dice {
 		return diceRoll;
 	}
 }
-
+*/
