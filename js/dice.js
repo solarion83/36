@@ -1,4 +1,4 @@
-class Dice {
+/* class Dice {
 
 	constructor() {
 		this.lastRoll = "";
@@ -13,5 +13,5 @@ class Dice {
 		console.log(this.lastRoll);
 		return diceRoll;
 	}
-}
+}*/
 

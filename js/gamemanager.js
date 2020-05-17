@@ -15,22 +15,22 @@ class Dice {
 	}
 }
 
-let getInterface = document.querySelector(".interface");
-let getDiceArea = document.querySelector(".dicearea");
-let getInteractionArea = document.querySelector(".interactionarea");
+const getInterface = document.querySelector(".interface");
+const getDiceArea = document.querySelector(".dicearea");
+const getInteractionArea = document.querySelector(".interactionarea");
 
-let GameManager = {
+var GameManager = {
 
 	initGame: function() {
 
-		let dice1 = new Dice;
-		let dice2 = new Dice;
-		let dice3 = new Dice;
-		let dice4 = new Dice;
-		let dice5 = new Dice;
-		let dice6 = new Dice;
+		var dice1 = new Dice;
+		var dice2 = new Dice;
+		var dice3 = new Dice;
+		var dice4 = new Dice;
+		var dice5 = new Dice;
+		var dice6 = new Dice;
 
-		let unselectedDice = new Array;
+		var unselectedDice = new Array;
 
 		/*
 		for (i = 0; i < 6; i++) {
@@ -47,11 +47,14 @@ let GameManager = {
 		unselectedDice[5] = dice6;
 
 		getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\" onclick=\"GameManager.throwDice()\">Würfeln!</button>";
+		return unselectedDice;
 	},
 
 
 	throwDice: function() {
 
+		var x = unselectedDice;
+		
 		for (i = 0; i < unselectedDice.length; i++) {
 		unselectedDice[i].getDiceRoll();
 		getDiceArea.innerHTML = getDiceArea.innerHTML + unselectedDice[i].imgPath;
