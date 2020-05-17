@@ -1,4 +1,5 @@
-/* class Dice {
+//Classes must come before game sequencing (i.e. GameManager)
+class Dice {
 
 	constructor() {
 		this.lastRoll = "";
@@ -13,5 +14,10 @@
 		console.log(this.lastRoll);
 		return diceRoll;
 	}
-}*/
+
+	getIsPicked () {
+		console.log(this.isPicked);
+		return isPicked;
+	}
+}
 
