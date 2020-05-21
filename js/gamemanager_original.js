@@ -24,16 +24,6 @@ unselectedDice[2] = dice3;
 unselectedDice[3] = dice4;
 unselectedDice[4] = dice5;
 unselectedDice[5] = dice6;
-
-let sumDice;
-
-function getSumDice() {
-	for	(i=0;i<unselectedDice.length;i++) {
-		sumDice += unselectedDice[i].lastRoll;
-
-	return sumDice;
-	}
-}
 	
 
 var GameManager = {
@@ -55,18 +45,14 @@ var GameManager = {
 		getDiceArea.innerHTML = getDiceArea.innerHTML + unselectedDice[i].imgPath;
 		}
 
-		getSumDice();
-		
-		console.log(getSumDice());
+		//console.log(dice3.lastRoll);
 
-		getInteractionArea.innerHTML = " <label>Welchen Würfel möchtest du behalten?<label><select id=\"eingabebehalten\" multiple><option value=\"1\">Würfel 1</option><option value=\"2\">Würfel 2</option><option value=\"3\">Würfel 3</option><option value=\"4\">Würfel 4</option><option value=\"5\">Würfel 5</option><option value=\"6\">Würfel 6</option></select><button onclick=\"GameManager.behalten()\">Ok</button>";
+		getInteractionArea.innerHTML = "<label>Welchen Würfel möchtest du behalten?<label><select id=\"eingabebehalten\" multiple><option value=\"1\">Würfel 1</option><option value=\"2\">Würfel 2</option><option value=\"3\">Würfel 3</option><option value=\"4\">Würfel 4</option><option value=\"5\">Würfel 5</option><option value=\"6\">Würfel 6</option></select><button onclick=\"GameManager.behalten()\">Ok</button>";
 	},
 
 	behalten: function() {
 		var getBehaltenValue = $("#eingabebehalten").val();
 
-		
-		
 		console.log(getBehaltenValue);
 
 		for (j=0; j < getBehaltenValue.length; j++) {
@@ -87,8 +73,7 @@ var GameManager = {
 			}
 		}
 
-		//this.throwDice();
-		getInteractionArea.innerHTML = "Behaltene Würfel: " + getBehaltenValue + " <button onlick=\"GameManager.throwDice()\">Weiterwürfeln</button>";
+		getInteractionArea.innerHTML = "Behaltene Würfel: " + getBehaltenValue + " <button onlick=\"this.throwDice()\">Weiterwürfeln</button>";
 			
 
 		/*if (getBehaltenValue === null && getBehaltenValue === "") {
