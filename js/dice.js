@@ -2,16 +2,17 @@
 
 class Dice {
 
-	constructor() {
+	constructor(id) {
 		this.lastRoll = "";
 		this.imgPath = "";
 		this.isPicked = false;
+		this.id = id;
 	}
 
 	getDiceRoll () {
 		let diceRoll = (Math.floor(Math.random() * Math.floor(6))+1);
 		this.lastRoll = diceRoll;
-		this.imgPath = '<img src=\'img/' + this.lastRoll + '.png\'>';
+		this.imgPath = '<img '+this.id+'src=\'img/' + this.lastRoll + '.png\'>';
 		console.log(this.lastRoll);
 		return diceRoll;
 	}
@@ -24,4 +25,10 @@ class Dice {
 	setIsPicked() {
 		this.isPicked = true;
 	}
+
+	setIsNotPicked() {
+		this.isPicked = false;
+	}
+
+
 }
