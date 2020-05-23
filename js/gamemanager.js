@@ -145,7 +145,7 @@ var GameManager = {
 
 	preAttack: function(wertAngriff) {
 
-		getInstruction.textContent = "Auf den Gegner würfeln mit"+wertAngriff+"ern!";
+		getInstruction.textContent = "Auf den Gegner würfeln mit "+wertAngriff+"ern!";
 
 		// Würfel zurücksetzen 
 		var dice1 = new Dice("id=\"1\"");
@@ -172,6 +172,10 @@ var GameManager = {
 
 	},
 
+	////////////////
+	// WertAngriff ist leer o. undefined
+	///////////////
+
 	attack: function(wertAngriff) {
 
 		getDiceArea.innerHTML = "";
@@ -183,7 +187,7 @@ var GameManager = {
 			}
 
 			if (unselectedDice[i] == wertAngriff) {
-				unselectedDice[i].getIsPicked();
+				unselectedDice[i].setIsPicked();
 				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].imgPath;
 			}
 				
