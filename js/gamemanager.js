@@ -13,6 +13,9 @@ let sumDice;
 let playerPoints = 0;
 let opponentPoints = 0;
 
+var wertAngriff = 0;
+var schaden = 0;
+
 var GameManager = {
 
 	initGame: function() {
@@ -138,13 +141,17 @@ var GameManager = {
 		} else if (GameManager.getSumDice() == 30) {
 			GameManager.initGame();
 		} else if (GameManager.getSumDice() > 30) {
-			let wertAngriff = GameManager.getSumDice() - 30;
-			GameManager.preAttack(wertAngriff);
+			wertAngriff = GameManager.getSumDice() - 30;
+			GameManager.preAttack();
 		}
 	},
 
-	preAttack: function(wertAngriff) {
+	preAttack: function() {
 
+		//Jetzt wird preAttack ausgeführt
+		console.log("preAttack ausführen");
+		console.log(wertAngriff);
+		
 		getInstruction.textContent = "Auf den Gegner würfeln mit "+wertAngriff+"ern!";
 
 		// Würfel zurücksetzen 
@@ -161,41 +168,95 @@ var GameManager = {
 		unselectedDice[4] = dice5;
 		unselectedDice[5] = dice6;
 
+		for (i = 0; i < unselectedDice.length; i++) {
+			unselectedDice[i].setIsNotPicked();
+		}
+
 		getDiceArea.innerHTML = "";
 		getDiceAreaSelected.innerHTML = "";
 
-		getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\" onclick=\"GameManager.attack()\">Auf Gegner würfeln!</button>";
+		getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\">Auf Gegner würfeln!</button>";
 		
-		GameManager.attack(wertAngriff);
+		$(".btn-wuerfeln").click(function () {
+  
+			if (GameManager.attack() == false) {
+				GameManager.initGame();
+			}	
+		})
+
+		if (GameManager.attack() == false) {
+			return;
+		}	
+
+		console.log("preAttack beendet");
+		
+		
 
 
 
 	},
 
-	////////////////
-	// WertAngriff ist leer o. undefined
-	///////////////
+	attack: function() {
 
-	attack: function(wertAngriff) {
-
+		console.log("attack ausführen");
+		console.log(wertAngriff);
+		
 		getDiceArea.innerHTML = "";
 		getDiceAreaSelected.innerHTML = "";
+
+		let wuerfelGetroffen;
 		
+		wuerfelGetroffen = false;
+
 		for (i = 0; i < unselectedDice.length; i++) {
-			if	(!unselectedDice[i].getIsPicked()) {
+			/* if	(!unselectedDice[i].getIsPicked()) {
 				unselectedDice[i].getDiceRoll(); 
 			}
 
-			if (unselectedDice[i] == wertAngriff) {
+			if (!unselectedDice[i].getIsPicked() && unselectedDice[i].lastRoll == wertAngriff) {
+				
 				unselectedDice[i].setIsPicked();
+				wuerfelGetroffen = true;
+				console.log("Würfel getroffen");
+				schaden += wertAngriff;
+				
 				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].imgPath;
 			}
 				
-			 else {
+			else {
 				getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].imgPath+"</div>";
+			} */
+
+			//Alternative For-Schleife
+			if (unselectedDice[i].getIsPicked()) {
+
+				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].imgPath;
+
+			} else {
+				
+				unselectedDice[i].getDiceRoll(); 
+				
+				if (unselectedDice[i].lastRoll == wertAngriff) {
+
+					unselectedDice[i].setIsPicked();
+					wuerfelGetroffen = true;
+					console.log("Würfel getroffen");
+					schaden += wertAngriff;
+					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice selectedDice\">"+unselectedDice[i].imgPath+"</div>";
+
+				} else {
+
+					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].imgPath+"</div>";
+				}
 			}
 			
 		}
+
+		console.log("Verlasse attack");
+		return wuerfelGetroffen;
+		
+		
+		
 
 	},
 
