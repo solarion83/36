@@ -1,3 +1,10 @@
+/////////// Main Call ///////////
+$(".gamebutton").click(function () {
+	gameManager(); })
+
+
+
+/////////// Main Function ///////////
 function gameManager () {
 
 	console.log("Game Manager gestartet");
@@ -20,15 +27,24 @@ function gameManager () {
 	var wertAngriff = 0;
 	var schaden = 0;
 
+	
+	/////////// Game Sequence ///////////
+	
 	initGame();
 
-	getDiceArea.innerHTML = "";
+	clearDiv(getDiceArea);
+
 	getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\">Würfeln!</button>";
 
 	$(".btn-wuerfeln").click( function() {
 
 		throwDice();
-	}) 
+	})
+	
+	
+
+
+	/////////// Functions ///////////
 
 	function initGame () {
 
@@ -59,23 +75,18 @@ function gameManager () {
 		console.log("Throw Dice gestartet");
 		
 		//Anzeige DiceArea zurücksetzen
-		//getDiceArea.innerHTML = "";
-		while (getDiceArea.firstChild) {
-			getDiceArea.removeChild(getDiceArea.firstChild);
-		}
-		//getDiceAreaSelected.innerHTML = "";
+		
+		clearDiv(getDiceArea);
+		clearDiv(getDiceAreaSelected);
 
-		while (getDiceAreaSelected.firstChild) {
-			getDiceAreaSelected.removeChild(getDiceAreaSelected.firstChild);
-		}
 		
 		//Würfel würfeln und ausgeben, falls nicht herausgenommen
 		for (i = 0; i < unselectedDice.length; i++) {
 			if	(!unselectedDice[i].getIsPicked()) {
 				unselectedDice[i].getDiceRoll(); 
-				getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].imgPath+"</div>";
+				getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].icon+"</div>";
 			} else {
-				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].imgPath;
+				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].icon;
 			}
 			
 		}
@@ -214,29 +225,23 @@ function gameManager () {
 
 		console.log("preAttack beendet");
 		
-		
-
-
-
 	}
 
 	function attack () {
 
 		console.log("attack ausführen");
 		console.log(wertAngriff);
-		
-		getDiceArea.innerHTML = "";
-		getDiceAreaSelected.innerHTML = "";
 
-		let wuerfelGetroffen;
-		
-		wuerfelGetroffen = false;
+		clearDiv(getDiceArea);
+		clearDiv(getDiceAreaSelected);
+
+		let wuerfelGetroffen = false;
 
 		for (i = 0; i < unselectedDice.length; i++) {
 			
 			if (unselectedDice[i].getIsPicked()) {
 
-				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].imgPath;
+				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].icon;
 
 			} else {
 				
@@ -248,11 +253,11 @@ function gameManager () {
 					wuerfelGetroffen = true;
 					console.log("Würfel getroffen");
 					schaden += wertAngriff;
-					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice selectedDice\">"+unselectedDice[i].imgPath+"</div>";
+					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice selectedDice\">"+unselectedDice[i].icon+"</div>";
 
 				} else {
 
-					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].imgPath+"</div>";
+					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].icon+"</div>";
 				}
 			}
 			
@@ -266,14 +271,19 @@ function gameManager () {
 
 	}
 
+	/////////// Helper Functions ///////////
+
 	function getSumDice () {
 		
 		return unselectedDice.reduce((a, {lastRoll}) => a + lastRoll, 0);
 	}
 
+	function clearDiv (element) {
+		while (element.firstChild) {
+			element.removeChild(element.firstChild);
+		}	
+	}
+
 	
 }
 
-// gameManager();
-$(".gamebutton").click(function () {
-	gameManager(); })
