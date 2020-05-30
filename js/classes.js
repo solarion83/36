@@ -13,6 +13,7 @@ class Dice {
 	getDiceRoll () {
 		let diceRoll = (Math.floor(Math.random() * Math.floor(6))+1);
 		this.lastRoll = diceRoll;
+		
 		switch (this.lastRoll) {
 			
 			case 1: this.icon = "<i "+this.id+" class=\"fas fa-dice-one\"></i>";
@@ -52,4 +53,24 @@ class Dice {
 	}
 
 
+}
+
+class Player {
+	constructor (id, isActive) {
+		this.id = id;
+		this.isActive = isActive;
+		this.points = 0;
+	}
+
+	setIsActive () {
+		this.isActive = true;
+	}
+
+	setIsNotActive () {
+		this.isActive = false;
+	}
+
+	getIfActive () {
+		return this.isActive;
+	}
 }
