@@ -13,14 +13,14 @@
 
 
 	background: #115650; /* Old browsers */
-background: -moz-linear-gradient(45deg, #115650 0%, #3e7d9b 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(45deg, #115650 0%,#3e7d9b 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(45deg, #115650 0%,#3e7d9b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#115650', endColorstr='#3e7d9b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: -moz-linear-gradient(45deg, #115650 0%, #3e7d9b 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, #115650 0%,#3e7d9b 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, #115650 0%,#3e7d9b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#115650', endColorstr='#3e7d9b',GradientType=1 ); IE6-9 fallback on horizontal gradient
 }
 
 .dicearea {
-		border-top: solid 1px;
+	border-top: solid 1px;
 	border-bottom: solid 1px;
 	background: ivory;
 	display:flex;
@@ -35,6 +35,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#115650', end
 
 .selectedDice {
 	border: 5px solid yellow;
+}
+
+.selectedDice img {
 	padding: 0px;
 }
 
