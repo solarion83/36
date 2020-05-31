@@ -4,7 +4,6 @@ class Dice {
 
 	constructor(id) {
 		this.lastRoll = "";
-		this.imgPath = "";
 		this.isPicked = false;
 		this.id = id;
 		this.icon = "";
@@ -16,26 +15,25 @@ class Dice {
 		
 		switch (this.lastRoll) {
 			
-			case 1: this.icon = "<i "+this.id+" class=\"fas fa-dice-one\"></i>";
+			case 1: this.icon = (`<i ${this.id} class="fas fa-dice-one"></i>`);
 			break;
 
-			case 2: this.icon = "<i "+this.id+" class=\"fas fa-dice-two\"></i>";
+			case 2: this.icon = (`<i ${this.id} class="fas fa-dice-two"></i>`);
 			break;
 
-			case 3: this.icon = "<i "+this.id+" class=\"fas fa-dice-three\"></i>";
+			case 3: this.icon = (`<i ${this.id} class="fas fa-dice-three"></i>`);
 			break;
 
-			case 4: this.icon = "<i "+this.id+" class=\"fas fa-dice-four\"></i>";
+			case 4: this.icon = (`<i ${this.id} class="fas fa-dice-four"></i>`);
 			break;
 
-			case 5: this.icon = "<i "+this.id+" class=\"fas fa-dice-five\"></i>";
+			case 5: this.icon = (`<i ${this.id} class="fas fa-dice-five"></i>`);
 			break;
 
-			case 6: this.icon = "<i "+this.id+" class=\"fas fa-dice-six\"></i>";
+			case 6: this.icon = (`<i ${this.id} class="fas fa-dice-six"></i>`);
 			break;
 		}
-		//this.imgPath = '<img '+this.id+'src=\'img/' + this.lastRoll + '.png\'>';
-		//console.log(this.lastRoll);
+
 		return diceRoll;
 	}
 

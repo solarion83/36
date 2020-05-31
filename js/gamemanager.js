@@ -16,7 +16,7 @@ function gameManager () {
 	const getDiceAreaSelected = document.querySelector("#dicearea-selected");
 	const getInteractionArea = document.querySelector(".interactionarea");
 
-	var diceResult = new Array;
+	var diceArray = new Array;
 
 	var wertAngriff = 0;
 	var schaden = 0;
@@ -67,7 +67,7 @@ function gameManager () {
 		let printArraySelected = [];
 
 		//Würfel würfeln und ausgeben, falls nicht herausgenommen
-		diceResult.forEach(element => {
+		diceArray.forEach(element => {
 			if	(!element.getIsPicked()) {
 				element.getDiceRoll(); 
 				printArrayUnselected.push(`<div class=\"dice\">${element.icon}</div>`);
@@ -93,15 +93,14 @@ function gameManager () {
 				
 				$(this).removeClass("selectedDice");
 
-				diceResult[(diceClicked - 1)].setIsNotPicked();
+				diceArray[(diceClicked - 1)].setIsNotPicked();
 				anzahlWuerfelGewaehlt--;
 
 			} else {
 				$(this).addClass("selectedDice");
 
-				diceResult[(diceClicked - 1)].setIsPicked();
-				anzahlWuerfelGewaehlt++;
-							
+				diceArray[(diceClicked - 1)].setIsPicked();
+				anzahlWuerfelGewaehlt++;		
 			} 
 		})
 		
@@ -113,7 +112,6 @@ function gameManager () {
 			} else {
 				behalten();
 			}
-			
 		})
 
 		//Wenn Button "Aufhören" geklickt, gehe zu Funktion hauptPhaseVerrechnen
@@ -127,10 +125,9 @@ function gameManager () {
 
 	function behalten () {
 
-		if ((diceResult.find(x => x.isPicked === false)==null)) {
+		if ((diceArray.find(x => x.isPicked === false)==null)) {
 			hauptPhaseVerrechnen();
 			return;
-
 		}
 
 		getInteractionArea.innerHTML = "<button class=\"btn-weiterwuerfeln\">Weiterwürfeln</button><button class=\"btn-aufhoeren\">Aufhören</button>";
@@ -146,8 +143,6 @@ function gameManager () {
 			hauptPhaseVerrechnen();
 			return;
 		})
-
-			
 	}
 
 	function hauptPhaseVerrechnen () {
@@ -173,17 +168,16 @@ function gameManager () {
 
 	function preAttack () {
 
-		//Jetzt wird preAttack ausgeführt
 		console.log("preAttack ausführen");
 		console.log(wertAngriff);
 		
-		getInstruction.textContent = "Auf den Gegner würfeln mit "+wertAngriff+"ern!";
+		getInstruction.textContent = (`Auf den Gegner würfeln mit ${wertAngriff}ern!`);
 
 		// Würfel zurücksetzen
 		resetDice(); 
 
 		// Alle Würfel abwählen
-		diceResult.forEach(element => {
+		diceArray.forEach(element => {
 			element.setIsNotPicked();
 		})
 
@@ -203,8 +197,7 @@ function gameManager () {
 			return;
 		}	
 
-		console.log("preAttack beendet");
-		
+		console.log("preAttack beendet");	
 	}
 
 	function attack () {
@@ -217,7 +210,7 @@ function gameManager () {
 
 		let wuerfelGetroffen = false;
 
-		diceResult.forEach(element => {
+		diceArray.forEach(element => {
 			
 			if (element.getIsPicked()) {
 				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +element.icon;
@@ -244,7 +237,7 @@ function gameManager () {
 	/////////// Helper Functions ///////////
 
 	function getSumDice () {
-		return diceResult.reduce((a, {lastRoll}) => a + lastRoll, 0);
+		return diceArray.reduce((a, {lastRoll}) => a + lastRoll, 0);
 	}
 
 	function clearDiv (element) {
@@ -260,12 +253,12 @@ function gameManager () {
 		var dice4 = new Dice("id=\"4\"");
 		var dice5 = new Dice("id=\"5\"");
 		var dice6 = new Dice("id=\"6\"");
-		diceResult[0] = dice1;
-		diceResult[1] = dice2;
-		diceResult[2] = dice3;
-		diceResult[3] = dice4;
-		diceResult[4] = dice5;
-		diceResult[5] = dice6;
+		diceArray[0] = dice1;
+		diceArray[1] = dice2;
+		diceArray[2] = dice3;
+		diceArray[3] = dice4;
+		diceArray[4] = dice5;
+		diceArray[5] = dice6;
 	}
 
 	function getActivePlayer () {
@@ -275,7 +268,4 @@ function gameManager () {
 			return player2;
 		}
 	}
-
-	
 }
-
