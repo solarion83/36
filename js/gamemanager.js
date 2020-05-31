@@ -16,7 +16,7 @@ function gameManager () {
 	const getDiceAreaSelected = document.querySelector("#dicearea-selected");
 	const getInteractionArea = document.querySelector(".interactionarea");
 
-	var unselectedDice = new Array;
+	var diceResult = new Array;
 
 	var wertAngriff = 0;
 	var schaden = 0;
@@ -67,7 +67,7 @@ function gameManager () {
 		let printArraySelected = [];
 
 		//Würfel würfeln und ausgeben, falls nicht herausgenommen
-		unselectedDice.forEach(element => {
+		diceResult.forEach(element => {
 			if	(!element.getIsPicked()) {
 				element.getDiceRoll(); 
 				printArrayUnselected.push(`<div class=\"dice\">${element.icon}</div>`);
@@ -93,13 +93,13 @@ function gameManager () {
 				
 				$(this).removeClass("selectedDice");
 
-				unselectedDice[(diceClicked - 1)].setIsNotPicked();
+				diceResult[(diceClicked - 1)].setIsNotPicked();
 				anzahlWuerfelGewaehlt--;
 
 			} else {
 				$(this).addClass("selectedDice");
 
-				unselectedDice[(diceClicked - 1)].setIsPicked();
+				diceResult[(diceClicked - 1)].setIsPicked();
 				anzahlWuerfelGewaehlt++;
 							
 			} 
@@ -127,15 +127,13 @@ function gameManager () {
 
 	function behalten () {
 
-		if ((unselectedDice.find(x => x.isPicked === false)==null)) {
-			console.log("Alle Würfel gewählt. Weiter gehts mit der nächsten Funktion!");
+		if ((diceResult.find(x => x.isPicked === false)==null)) {
 			hauptPhaseVerrechnen();
 			return;
 
 		}
 
-		//getInteractionArea.innerHTML = "Behaltene Würfel: " + getBehaltenValue + " <button class=\"btn-weiterwuerfeln\">Weiterwürfeln</button><button class=\"btn-aufhoeren\">Aufhören</button>";
-		getInteractionArea.innerHTML = "Behaltene Würfel: <button class=\"btn-weiterwuerfeln\">Weiterwürfeln</button><button class=\"btn-aufhoeren\">Aufhören</button>";
+		getInteractionArea.innerHTML = "<button class=\"btn-weiterwuerfeln\">Weiterwürfeln</button><button class=\"btn-aufhoeren\">Aufhören</button>";
 
 		$(".btn-weiterwuerfeln").click(function () {
 
@@ -185,7 +183,7 @@ function gameManager () {
 		resetDice(); 
 
 		// Alle Würfel abwählen
-		unselectedDice.forEach(element => {
+		diceResult.forEach(element => {
 			element.setIsNotPicked();
 		})
 
@@ -219,31 +217,25 @@ function gameManager () {
 
 		let wuerfelGetroffen = false;
 
-		for (i = 0; i < unselectedDice.length; i++) {
+		diceResult.forEach(element => {
 			
-			if (unselectedDice[i].getIsPicked()) {
-
-				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +unselectedDice[i].icon;
-
+			if (element.getIsPicked()) {
+				getDiceAreaSelected.innerHTML = getDiceAreaSelected.innerHTML +element.icon;
 			} else {
-				
-				unselectedDice[i].getDiceRoll(); 
-				
-				if (unselectedDice[i].lastRoll == wertAngriff) {
+				element.getDiceRoll(); 
+			
+				if (element.lastRoll == wertAngriff) {
 
-					unselectedDice[i].setIsPicked();
+					element.setIsPicked();
 					wuerfelGetroffen = true;
-					console.log("Würfel getroffen");
 					schaden += wertAngriff;
-					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice selectedDice\">"+unselectedDice[i].icon+"</div>";
+					getDiceArea.innerHTML = getDiceArea.innerHTML + (`<div class=\"dice selectedDice\">${element.icon}</div>`);
 
 				} else {
-
-					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+unselectedDice[i].icon+"</div>";
+					getDiceArea.innerHTML = getDiceArea.innerHTML + "<div class=\"dice\">"+element.icon+"</div>";
 				}
 			}
-			
-		}
+		})
 
 		console.log("Verlasse attack");
 		return wuerfelGetroffen;
@@ -252,8 +244,7 @@ function gameManager () {
 	/////////// Helper Functions ///////////
 
 	function getSumDice () {
-		
-		return unselectedDice.reduce((a, {lastRoll}) => a + lastRoll, 0);
+		return diceResult.reduce((a, {lastRoll}) => a + lastRoll, 0);
 	}
 
 	function clearDiv (element) {
@@ -269,12 +260,12 @@ function gameManager () {
 		var dice4 = new Dice("id=\"4\"");
 		var dice5 = new Dice("id=\"5\"");
 		var dice6 = new Dice("id=\"6\"");
-		unselectedDice[0] = dice1;
-		unselectedDice[1] = dice2;
-		unselectedDice[2] = dice3;
-		unselectedDice[3] = dice4;
-		unselectedDice[4] = dice5;
-		unselectedDice[5] = dice6;
+		diceResult[0] = dice1;
+		diceResult[1] = dice2;
+		diceResult[2] = dice3;
+		diceResult[3] = dice4;
+		diceResult[4] = dice5;
+		diceResult[5] = dice6;
 	}
 
 	function getActivePlayer () {
