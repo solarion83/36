@@ -1,0 +1,29 @@
+Grober Ablauf
+-------------
+
+
+Spiel starten
+
+Alle Würfel würfeln, ggf. Würfel herausnehmen und neu würfeln
+
+Spieler kann entweder so lange würfeln bis alle Würfel weg sind oder vorher aufhören
+
+Punkte verrechnen
+
+Falls Würfelergebnis > 30 {
+    
+    Alle Würfel würfeln
+    
+    Falls richtige Augenzahl getroffen {
+        
+        Würfel herausnehmen
+        
+        Mit restlichen Würfeln neu würfeln
+
+        wiederholen bis kein Würfel getroffen hat
+    }
+
+    Punkte auf Gegner rechnen
+}
+
+Sonst 

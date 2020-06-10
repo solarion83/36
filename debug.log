@@ -5,3 +5,4 @@
 [0524/171205.151:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: Die Pipe wurde beendet. (0x6D)
 [0524/195833.702:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: Die Pipe wurde beendet. (0x6D)
 [0524/201456.186:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: Die Pipe wurde beendet. (0x6D)
+[0610/174901.718:ERROR:registration_protocol_win.cc(131)] TransactNamedPipe: Die Pipe wurde beendet. (0x6D)

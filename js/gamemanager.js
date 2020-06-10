@@ -15,6 +15,7 @@ function gameManager () {
 	const getDiceArea = document.querySelector(".dicearea");
 	const getDiceAreaSelected = document.querySelector("#dicearea-selected");
 	const getInteractionArea = document.querySelector(".interactionarea");
+	const getStatusArea = document.querySelector(".statusarea");
 
 	var diceArray = new Array;
 
@@ -29,14 +30,19 @@ function gameManager () {
 	
 	initGame();
 
-	clearDiv(getDiceArea);
+	//clearDiv(getDiceArea);
 
-	getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\">Würfeln!</button>";
+	//getInteractionArea.innerHTML = "<button class=\"btn-wuerfeln\">Würfeln!</button>";
 
-	$(".btn-wuerfeln").click( function() {
+	//$(".btn-wuerfeln").click( function() {
+		
+		//Buttons anzeigen
+		//getInteractionArea.innerHTML = "<label>Welchen Würfel möchtest du behalten?</label><button class=\"btn-behalten\">Ok</button><button class=\"btn-aufhoeren\">Aufhören</button>";
 
-		throwAndPickDice();
-	})
+	//	throwAndPickDice();
+		//	hauptPhaseVerrechnen();
+	
+	//})
 	
 	
 	/////////// Game Functions ///////////
@@ -51,10 +57,10 @@ function gameManager () {
 		resetDice(); 
 
 		console.log("Init Game beendet");
-		return;
+		
+		throwAndPickDice ();
 
 	}
-
 
 	function throwAndPickDice () {
 		
@@ -63,108 +69,134 @@ function gameManager () {
 		//Buttons anzeigen
 		getInteractionArea.innerHTML = "<label>Welchen Würfel möchtest du behalten?</label><button class=\"btn-behalten\">Ok</button><button class=\"btn-aufhoeren\">Aufhören</button>";
 
-		let printArrayUnselected = [];
-		let printArraySelected = [];
+		if (!(diceArray.find(x => x.isPicked === false)==null)) {
 
-		//Würfel würfeln und ausgeben, falls nicht herausgenommen
-		diceArray.forEach(element => {
-			if	(!element.getIsPicked()) {
-				element.getDiceRoll(); 
-				printArrayUnselected.push(`<div class=\"dice\">${element.icon}</div>`);
-			} else {
-				printArraySelected.push(element.icon);
-			}
-		})
+			let printArrayUnselected = [];
+			let printArraySelected = [];
 
-		getDiceArea.innerHTML = printArrayUnselected.join("");
-		getDiceAreaSelected.innerHTML = printArraySelected.join("");
+			//Würfel würfeln, falls nicht gewählt, und zu Arrays hinzufügen
+			diceArray.forEach(element => {
+				if	(!element.getIsPicked()) {
+					element.getDiceRoll(); 
+					printArrayUnselected.push(`<div class=\"dice\">${element.icon}</div>`);
+				} else {
+					printArraySelected.push(element.icon);
+				}
+			})
 
-		getInteractionArea.innerHTML = (`Die aktuelle Augenzahl beträgt ${getSumDice()}. ${getInteractionArea.innerHTML}`);
+			//Arrays ausgeben
+			getDiceArea.innerHTML = printArrayUnselected.join("");
+			getDiceAreaSelected.innerHTML = printArraySelected.join("");
 
-		let anzahlWuerfelGewaehlt = 0;
-		
-		$(".dice").click(function (e) {
+			getStatusArea.innerHTML = (`Die aktuelle Augenzahl beträgt ${getSumDice()}.`);
+
+			let anzahlWuerfelGewaehlt = 0;
 			
-			var diceClicked = parseInt(e.target.id,10);
-			console.log(diceClicked);
-			
-			//CSS Klasse hinzufügen o. entfernen
-			if ($(this).hasClass("selectedDice")) {
+			// Würfel auswählen
+			$(".dice").click(function (e) {
 				
-				$(this).removeClass("selectedDice");
+				var diceClicked = parseInt(e.target.id,10);
+				console.log(diceClicked);
+				
+				//CSS Klasse hinzufügen o. entfernen
+				if ($(this).hasClass("selectedDice")) {
+					
+					$(this).removeClass("selectedDice");
 
-				diceArray[(diceClicked - 1)].setIsNotPicked();
-				anzahlWuerfelGewaehlt--;
+					diceArray[(diceClicked - 1)].setIsNotPicked();
+					if (anzahlWuerfelGewaehlt > 0) {
+						anzahlWuerfelGewaehlt--;
+					}
 
-			} else {
-				$(this).addClass("selectedDice");
+				} else {
+					$(this).addClass("selectedDice");
 
-				diceArray[(diceClicked - 1)].setIsPicked();
-				anzahlWuerfelGewaehlt++;		
-			} 
-		})
-		
-		//Wenn Button "Behalten" geklickt, gehe zu Funktion behalten
-		$(".btn-behalten").click(function () {
+					diceArray[(diceClicked - 1)].setIsPicked();
+					anzahlWuerfelGewaehlt++;		
+				} 
+			})
+			
+			//Wenn Button "Behalten" geklickt, entweder neu würfeln oder gehe zu hauptPhaseVerrechnen
+			$(".btn-behalten").click(function () {
 
-			if (anzahlWuerfelGewaehlt == "") {
-				alert("Du musst mindestens einen Würfel wählen!");
-			} else {
-				behalten();
-			}
-		})
+				if (anzahlWuerfelGewaehlt === 0) {
+					alert("Du musst mindestens einen Würfel wählen!");
+				}
+				else {
+					behalten();
+				}
+			})
 
-		//Wenn Button "Aufhören" geklickt, gehe zu Funktion hauptPhaseVerrechnen
-		$(".btn-aufhoeren").click(function () {
+			//Wenn Button "Aufhören" geklickt, gehe zu Funktion hauptPhaseVerrechnen
+			$(".btn-aufhoeren").click(function () {
+			
+				diceArray.forEach(element => {
+					element.setIsPicked();
+				}) 
+				
+				hauptPhaseVerrechnen();
+			})
+		} else {
+			hauptPhaseVerrechnen ();
+		}
 
-			hauptPhaseVerrechnen();
-			return;
-		})
+
 		console.log("Throw and Pick Dice beendet");
+
+
 	}
 
 	function behalten () {
-
-		if ((diceArray.find(x => x.isPicked === false)==null)) {
-			hauptPhaseVerrechnen();
-			return;
-		}
 
 		getInteractionArea.innerHTML = "<button class=\"btn-weiterwuerfeln\">Weiterwürfeln</button><button class=\"btn-aufhoeren\">Aufhören</button>";
 
 		$(".btn-weiterwuerfeln").click(function () {
 
 			throwAndPickDice();
-			return;
+			
 		})
 
 		$(".btn-aufhoeren").click(function () {
 
 			hauptPhaseVerrechnen();
-			return;
-		})
+			
+		}) 
 	}
 
 	function hauptPhaseVerrechnen () {
 
-		if (getSumDice() < 30) {
+		console.log("hauptPhaseVerrechnen gestartet");
+
+		getInteractionArea.innerHTML = "";
+
+		//if (diceArray.find(x => x.isPicked === false)==null) {
+			if (getSumDice() < 30) {
 			
-			getActivePlayer().points += (30 - getSumDice());
+				getActivePlayer().points += (30 - getSumDice());
+	
+				if (getActivePlayer().id === 1) {
+					getPlayer1Points.innerHTML = (`Punkte Spieler ${getActivePlayer().id}:<br>${getActivePlayer().points}</div>`);
+				} else {
+					getPlayer2Points.innerHTML = (`Punkte Spieler ${getActivePlayer().id}:<br>${getActivePlayer().points}</div>`); 
+				}
+				switchActivePlayer();
+				initGame();
+	
+			} else if (getSumDice() == 30) {
 
-			if (getActivePlayer().id === 1) {
-				getPlayer1Points.innerHTML = (`Punkte Spieler ${getActivePlayer().id}:<br>${getActivePlayer().points}</div>`);
-			} else {
-				getPlayer2Points.innerHTML = (`Punkte Spieler ${getActivePlayer().id}:<br>${getActivePlayer().points}</div>`); 
+				switchActivePlayer();
+				initGame();
+			} else if (getSumDice() > 30) {
+				wertAngriff = getSumDice() - 30;
+				preAttack();
 			}
-			initGame();
+			console.log("hauptPhaseVerrechnen beendet");
+		//} else {
+		//	 console.log("Noch nicht alle Würfel gewählt");
+		//}
 
-		} else if (getSumDice() == 30) {
-			initGame();
-		} else if (getSumDice() > 30) {
-			wertAngriff = getSumDice() - 30;
-			preAttack();
-		}
-	}
+		
+	} 
 
 	function preAttack () {
 
@@ -189,6 +221,7 @@ function gameManager () {
 		$(".btn-wuerfeln").click(function () {
 
 			if (attack() == false) {
+				switchActivePlayer();
 				initGame();
 			}	
 		})
@@ -266,6 +299,16 @@ function gameManager () {
 			return player1;
 		} else if (player2.getIfActive()) {
 			return player2;
+		}
+	}
+
+	function switchActivePlayer() {
+		if (player1.getIfActive()) {
+			player2.setIsActive();
+			player1.setIsNotActive();
+		} else if (player2.getIfActive()) {
+			player1.setIsActive();
+			player2.setIsNotActive();
 		}
 	}
 }

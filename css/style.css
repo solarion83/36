@@ -8,15 +8,7 @@
 	height:100vh;
 	width:100vw;
 
-	font-family:'Chelsea Market', sans-serif;
-
-
-
-	background: #115650; /* Old browsers */
-	background: -moz-linear-gradient(45deg, #115650 0%, #3e7d9b 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(45deg, #115650 0%,#3e7d9b 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(45deg, #115650 0%,#3e7d9b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#115650', endColorstr='#3e7d9b',GradientType=1 ); IE6-9 fallback on horizontal gradient
+	font-family:/*'Chelsea Market', */sans-serif;
 }
 
 .dicearea {
@@ -33,14 +25,23 @@
 	font-size:4rem;
 }
 
-.dicearea img {
-	padding:5px;
+.dicearea-selected img {
+	
+	background: black;
 		
 }
 
-.dice {
+
+.dicearea img {
+	padding:5px;
+	background: black;
+		
+}
+
+.dice  {
 	margin-left: 10px;
 	margin-right: 10px;
+
 }
 
 .selectedDice {
