@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -11,6 +11,43 @@
 	<title></title>
 </head>
 <body>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+	<div id="app">
+		<div v-if="showMe">
+				<ul>
+						<li v-for="value in foo">{{value}}</li>
+					</ul>
+					<button @click="add(Date.now())" type="button">
+						Add some
+					</button>
+		</div>
+
+		<button @click="show" type="button">
+				Show me
+			</button>
+	</div>
+
+	<script>
+	new Vue({
+		el:'#app',
+		data: {
+			showMe: true,
+			foo: [
+				'Foo', 'Bar', 'What', 'Ever'
+			]
+		},
+		methods: {
+			add(value) {
+				this.foo.push(value)
+			},
+			show() {
+				this.showMe = true;
+			}
+		}
+	})
+	</script>
 
 	<div class="wrapper container-fluid">
 
